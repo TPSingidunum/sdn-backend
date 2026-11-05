@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TaskModule } from './modules/task.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Task } from './entities/task.entitiy';
 
 @Module({
   imports: [
@@ -19,7 +18,7 @@ import { Task } from './entities/task.entitiy';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: [Task],
+        autoLoadEntities: true,
         synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
       }),
     }),
