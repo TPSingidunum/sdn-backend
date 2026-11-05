@@ -15,12 +15,12 @@ import { Task } from './entities/task.entitiy';
       useFactory: async (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
+        port: Number(configService.get<string>('DB_PORT') ?? 3306),
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         entities: [Task],
-        //synchronize: true, // Optional: Syncs the database schema with entities
+        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
       }),
     }),
     TaskModule,
